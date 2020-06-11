@@ -1,0 +1,97 @@
+<div class="container">
+    <div class="row mx-2">
+    <button class="btn btn-primary mt-3" (click)="abrirpopLibro(templatelibro)">Crear Libro</button>
+</div>
+<div class="row">
+<div class="col-md-6 mt-5">
+    <div class="card">
+        <div class="card-header">Buscar Libros</div>
+
+        <div class="mx-2 mt-3">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <select class="form-control" #selopcion>
+                        <option value="1">Nombre</option>
+                        <option value="2">Autor</option>
+                        <option value="3">Categoria</option>
+                    </select>
+                </div>
+                <input type="text" class="form-control" #txtbuscar aria-label="Username" aria-describedby="basic-addon1" (keyup)="BuscarLibro(txtbuscar,selopcion)">
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+    <div class="row mt-5">
+        <div class="card" *ngFor="let libro of ListaLibros; index as i">
+            <div class="card-header" style="text-align: right;">
+                <a class="btn btn-sm btn-primary mx-2" (click)="AbrirEditarLibro(libro.Id,templatelibro)"><i
+                        class="fa fa-pencil" aria-hidden="true"></i></a>
+                <a class="btn btn-sm btn-danger" (click)="eliminarLibro(libro.Id)">X</a>
+
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="form-control">Libro : {{libro.nombre}} </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-control">Categoria: {{GetCategoria(libro.idcategoria)}} </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-control">Autor: {{GetAutor(libro.idautor)}} </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #templatelibro>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Categoria</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="mx-2">
+
+            <form (submit)="GuardarLibro()" [formGroup]="formlibro">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Nombre" formControlName="nombre">
+                    <small *ngIf="formlibro.get('nombre').touched && formlibro.get('nombre').hasError('required')"
+                        class="text-danger">Ingrese el nombre del libro</small>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="ISBN" formControlName="isbn">
+                    <small *ngIf="formlibro.get('isbn').touched && formlibro.get('isbn').hasError('required')"
+                        class="text-danger">Ingrese el ISBN del libro</small>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" formControlName="idautor" aria-placeholder="seleccione el autor">
+                        <option class="form-control" value="0">Seleccione el Autor</option>
+                        <option class="form-control" *ngFor="let autor of ListaAutores; index as i;"
+                            value="{{autor.Id}}">{{autor.nombres}} {{autor.apellidos}}</option>
+                    </select>
+                    <small *ngIf="formlibro.get('idautor').touched && formlibro.get('idautor').hasError('required')"
+                        class="text-danger">Ingrese en autor del libro</small>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" formControlName="idcategoria">
+                        <option class="form-control" value="0">Seleccione la categoria</option>
+                        <option class="form-control" *ngFor="let categoria of Listacategorias; index as i;"
+                            value="{{categoria.Id}}">{{categoria.nombre}}</option>
+                    </select>
+                    <small
+                        *ngIf="formlibro.get('idcategoria').touched && formlibro.get('idcategoria').hasError('required')"
+                        class="text-danger">Seleccione la categoria</small>
+                </div>
+                <div class="form-group" style="text-align: center;">
+                    <button class="btn btn-success">guardar</button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</ng-template>

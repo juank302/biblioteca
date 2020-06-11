@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+        <div class="card  mx-auto mt-5">
+            <div class="card-header">
+                <h4>Login</h4>
+            </div>
+            <div class="card-container">
+                <div class="mx-5 mt-5">
+                    <form (submit)="Ingresar()" [formGroup]="formLogin">
+                        <div class="form-group">
+                            <input type="text" placeholder="Usuario" class="form-control" formControlName="usr">
+                            <small *ngIf="formLogin.get('usr').touched && formLogin.get('usr').hasError('required')"
+                                class="text-danger">Ingrese el usuario</small>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="password" class="form-control" formControlName="psw">
+                            <small *ngIf="formLogin.get('psw').touched && formLogin.get('psw').hasError('required')"
+                                class="text-danger">Ingrese el password</small>
+                        </div>
+                        <div class="form-group">
+                            <small class="text-danger">{{error}}</small>
+
+                        </div>
+
+                        <div class="form-group" style="text-align: center;">
+                            <button class="btn btn-primary float-center">Ingresar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
